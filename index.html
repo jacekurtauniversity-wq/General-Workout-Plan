@@ -198,6 +198,7 @@ ul.cues li{margin:1px 0}
   <a href="#running">Running</a>
   <a href="#groceries">Groceries</a>
   <a href="#checkin">Check-in</a>
+  <a href="#evidence">Evidence</a>
 </nav>
 
 <!-- ============ TODAY ============ -->
@@ -290,7 +291,7 @@ ul.cues li{margin:1px 0}
   <div class="tile"><div class="k">High-carb day</div><div class="v" id="kcalH"></div><div class="d">Mon · Thu (Upper A / Lower B)</div></div>
   <div class="tile"><div class="k">Moderate day</div><div class="v" id="kcalM"></div><div class="d">Tue · Wed · Fri · Sat</div></div>
   <div class="tile"><div class="k">Low-carb day</div><div class="v" id="kcalL"></div><div class="d">Sunday rest</div></div>
-  <div class="tile"><div class="k">Weekly average</div><div class="v" id="kcalAvg"></div><div class="d">per day · protein fixed ~200 g</div></div>
+  <div class="tile"><div class="k">Weekly average</div><div class="v" id="kcalAvg"></div><div class="d" id="protNote">per day</div></div>
 </div>
 <p class="small muted" id="tdeeNote">Starting maintenance is an estimate from your setup. Your weekly check-ins replace the estimate with real data; that is what the auto-adjust uses.</p>
 </section>
@@ -633,6 +634,7 @@ function renderOverview(){
  $("#kcalM").textContent=Math.round(dayTotals("M",a).kcal)+" kcal";
  $("#kcalL").textContent=Math.round(dayTotals("L",a).kcal)+" kcal";
  $("#kcalAvg").textContent=Math.round(weekAvg(a))+" kcal";
+ const pm=Math.round(dayTotals("M",a).p);const pn=$("#protNote");if(pn)pn.textContent=`per day · protein ~${pm} g (${(pm/(START.weight*0.4536)).toFixed(1)} g/kg)`;
  const eb=$("#eyebrow");if(eb&&PROF)eb.textContent=`${DUR}-day cut · starts ${fmtDate(START.date)} · lift ${LIFTDAYS===5?"Mon–Fri":"Mon/Wed/Fri"} ${WHEN==="pm"?"evenings":"mornings"} · 16:8 fasting · carb cycling`;const sl=$("#subline");if(sl&&PROF)sl.textContent=`${START.weight} lb → ~${Math.round(projectedAt(DUR/7))} lb by ${fmtDate(addDays(START.date,DUR))}. Open the Today tab each morning.`;
  $("#deficitLine").textContent=`Estimated maintenance ${MAINT.toLocaleString()} kcal a day (${PROF&&PROF.bf?"Katch-McArdle from your body fat":"Mifflin-St Jeor"}, activity ×${LIFTDAYS===5?"1.5":"1.4"}). The plan eats about ${DEF} kcal under that, targeting roughly ${r1(START.weight*PACE)} lb a week after the first two weeks of water loss. Faster than ~1% of bodyweight a week is where strength drops and loose-skin risk climbs; slower keeps more muscle but takes longer. ${PACE_NOTE}`;
  const T=(typeof tdeeEstimate==="function")?tdeeEstimate():null;if(T)$("#tdeeNote").textContent=`Measured maintenance from your own logs: ~${T.tdee} kcal/day over ${T.days} days (${T.dW} lb). The plan assumed ${MAINT}; the check-in adjusts to the real number.`;
@@ -1070,7 +1072,7 @@ $("#editProfile").addEventListener("click",()=>{fillSetup();$("#suCancel").hidde
 $("#suCancel").addEventListener("click",()=>showSetup(false));
 $("#suUnits").addEventListener("change",()=>{const m=$("#suUnits").value==="metric";$("#suWeight").placeholder=m?"kg, required":"lb, required";$("#suHeight").placeholder=m?"cm, optional":"inches, optional";});
 /* tabs via hash */
-const VIEWS=["today","overview","schedule","meals","lifting","running","groceries","checkin"];
+const VIEWS=["today","overview","schedule","meals","lifting","running","groceries","checkin","evidence"];
 function route(){let h=(location.hash||"#today").slice(1);if(!VIEWS.includes(h))h="today";
  VIEWS.forEach(v=>{document.getElementById("v-"+v).classList.toggle("on",v===h);});
  [...document.querySelectorAll("#tabs a")].forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+h));

@@ -180,6 +180,11 @@ ul.cues li{margin:1px 0}
   <label>Food <select id="suDiet"><option value="all" selected>Everything</option><option value="nored">No red meat</option><option value="pesc">Pescatarian</option><option value="veg">Vegetarian (eggs + dairy)</option></select></label>
   <label>Daily push-ups + crunches <select id="suHabit"><option value="0" selected>No</option><option value="50">50 each</option><option value="100">100 each</option></select></label>
   <label>People eating these meals <select id="suHouse"><option value="1" selected>Just me</option><option value="1.5">Me + one at half portions</option><option value="2">Two full portions</option></select></label>
+  <label>Where you shop (price level) <select id="suRegion">
+   <option value="1.0" selected>US · national average</option><option value="1.3">US · NYC, SF, LA, Boston, Seattle, Honolulu</option><option value="1.12">US · other large metros</option><option value="0.9">US · Midwest / South, small cities</option>
+   <option value="1.15">Canada</option><option value="0.95">United Kingdom</option><option value="1.05">Ireland</option><option value="1.0">Germany / France / Netherlands / Belgium</option><option value="0.85">Spain / Italy / Portugal / Greece</option><option value="1.4">Switzerland / Norway / Denmark / Iceland</option><option value="1.2">Sweden / Finland</option><option value="0.7">Poland / Czechia / Hungary / Romania</option>
+   <option value="1.15">Australia / New Zealand</option><option value="1.2">Japan / South Korea</option><option value="1.3">Singapore / Hong Kong</option><option value="1.1">UAE / Saudi Arabia / Qatar</option><option value="0.6">Mexico</option><option value="0.55">Brazil / Argentina / Colombia</option><option value="0.35">India / Pakistan / Bangladesh</option><option value="0.5">South Africa / Nigeria / Kenya</option><option value="0.5">Philippines / Vietnam / Thailand / Indonesia</option></select></label>
+  <label>Currency symbol <input type="text" id="suCur" maxlength="4" placeholder="$"></label>
   <label>Fixed block 1 (class/work) days <input type="text" id="suB1d" placeholder="e.g. Mon,Wed"></label>
   <label>Block 1 time <input type="text" id="suB1t" placeholder="e.g. 10:10-11:25"></label>
   <label>Fixed block 2 days <input type="text" id="suB2d" placeholder="e.g. Tue,Thu"></label>
@@ -435,8 +440,10 @@ ul.cues li{margin:1px 0}
 <!-- ============ GROCERIES ============ -->
 <section class="view" id="v-groceries">
 <h2>Groceries</h2>
-<p>Computed from your meals: one full week (2 high, 4 moderate, 1 low-carb day) times the people eating. Buy meat and frozen veg monthly in bulk, dairy and produce every two weeks. Cheapest protein per gram, in order: eggs, chicken breast, Greek yogurt, cottage cheese, chicken thigh, ground beef, steak.</p>
+<p>Computed from your meals: one full week (2 high, 4 moderate, 1 low-carb day) times the people eating. Prices start from US warehouse-club and discount-grocer averages scaled to the price level you chose in setup; tap any unit price and type what your store charges to make the totals exact. Buy meat and frozen veg monthly in bulk, dairy and produce every two weeks. Cheapest protein per gram, in order: eggs, chicken breast, Greek yogurt, cottage cheese, chicken thigh, ground beef, steak.</p>
+<div class="tiles" id="grocTiles"></div>
 <div id="grocTable"></div>
+<p class="small muted">Estimates assume cooking at home from basic ingredients, no name brands, and buying the large sizes listed. Expect ±20% between stores; the unit-price boxes are there to close that gap. Prices you enter are kept with your setup.</p>
 <h3>Pantry (restock when low)</h3>
 <ul><li>Olive oil, peanut butter, salsa, hot sauce, mustard, vinegar, salt + lite salt (or electrolyte powder), garlic powder, cumin, smoked paprika, cinnamon, black pepper, coffee.</li><li>Optional: creatine monohydrate 5 g/day, vitamin D3 in winter, fish oil, magnesium glycinate at night.</li><li>Gear: food scale, 12 three-cup containers, freezer bags, masking tape.</li></ul>
 <h3>Meal prep rhythm</h3>
@@ -487,6 +494,37 @@ ul.cues li{margin:1px 0}
 <li><b>Protein:</b> stays at ~200 g until you're under 240 lb, then 190 g (drop the Sunday eggs and 25 g of chicken). It is never cut to make calories fit.</li>
 </ul>
 <p class="small muted" id="storeNote">Your entries save to this page's private store and reload on any device where you open it.</p>
+</section>
+<!-- ============ EVIDENCE ============ -->
+<section class="view" id="v-evidence">
+<h2>What the evidence actually supports</h2>
+<p>Nothing in nutrition science is settled beyond all doubt, so this tab separates findings with strong, repeated support (which the plan is built on) from things that are useful but not proven to be better. Each item links to the research.</p>
+<h3>Strong evidence: the plan is built on these</h3>
+<ul>
+<li><b>High protein protects muscle in a deficit.</b> Benefits of extra protein for lean mass plateau around 1.6 g per kg of bodyweight per day in a meta-analysis of 49 trials, with higher intakes (up to ~2.2 g/kg) advised while dieting. This plan sets ~1.8–1.9 g/kg (0.85 g/lb). <a href="https://bjsm.bmj.com/content/52/6/376.abstract" target="_blank" rel="noopener">Morton et al., Br J Sports Med 2018</a>; <a href="https://openrepository.aut.ac.nz/items/723f44d2-7c20-4214-ba62-987339099039" target="_blank" rel="noopener">Helms et al., JISSN 2014</a>.</li>
+<li><b>Slower loss keeps more muscle.</b> Athletes losing ~0.7% of bodyweight per week kept or gained lean mass and strength; those losing ~1.4% per week lost lean mass. That is why the pace options run 0.5–1% and the app caps lean users at the slow end. <a href="https://www.pubmed.gov/21558571/" target="_blank" rel="noopener">Garthe et al., Int J Sport Nutr Exerc Metab 2011</a>.</li>
+<li><b>Resistance training is the non-negotiable.</b> Lifting during a deficit is the single most consistent way to retain lean mass; cardio alone does not. Training each muscle at least twice a week produces more growth than once. <a href="https://pubmed.ncbi.nlm.nih.gov/27102172/" target="_blank" rel="noopener">Schoenfeld et al., Sports Med 2016</a>.</li>
+<li><b>Calories decide fat loss; the diet's name doesn't.</b> Low-fat and low-carb produce the same weight loss at the same calories and protein over 12 months. Carb cycling here is a tool for training performance and adherence, not a fat-loss accelerator. <a href="https://jamanetwork.com/journals/jama/fullarticle/2673150" target="_blank" rel="noopener">Gardner et al., JAMA 2018 (DIETFITS)</a>.</li>
+<li><b>Don't cut fat too low.</b> Dietary fat below ~0.5 g/kg or ~20% of calories lowers testosterone and makes diets harder to keep. The meals hold 25–35% of calories from fat and the weekly adjustment only ever moves starch. <a href="https://openrepository.aut.ac.nz/items/723f44d2-7c20-4214-ba62-987339099039" target="_blank" rel="noopener">Helms et al., JISSN 2014</a>.</li>
+<li><b>Sleep is part of the diet.</b> With the same calories, people sleeping 5.5 h lost 55% less fat and 60% more lean mass than at 8.5 h. The lights-out time is not decoration. <a href="https://pubmed.ncbi.nlm.nih.gov/20921542/" target="_blank" rel="noopener">Nedeltcheva et al., Ann Intern Med 2010</a>.</li>
+<li><b>Creatine monohydrate works and is safe.</b> 3–5 g a day improves strength and lean-mass retention and is the most studied supplement in sport. <a href="https://doaj.org/article/4a276c2d31944beaab82cdc923c69c83" target="_blank" rel="noopener">Kreider et al., ISSN position stand, JISSN 2017</a>.</li>
+<li><b>Walking and running both work for the deficit.</b> Aerobic exercise adds to fat loss and health regardless of mode; running is included for the fitness goal, not because it burns fat better than walking per calorie. Beginners who build up gradually (walk-jog intervals) have fewer injuries than those who start running continuously. <a href="https://pubmed.ncbi.nlm.nih.gov/24549477/" target="_blank" rel="noopener">Videbæk et al., Sports Med 2015</a>.</li>
+</ul>
+<h3>Useful but not proven better: used for structure, not magic</h3>
+<ul>
+<li><b>Intermittent fasting (16:8).</b> In a 12-week randomized trial, time-restricted eating produced no more weight loss than three meals a day, and the fasting group lost slightly more lean mass. It is in this plan because many people find a fixed window easier to stick to and it removes evening snacking; the high protein and lifting are what guard the muscle. If you prefer four meals across the whole day at the same calories, results will be the same. <a href="https://pubmed.ncbi.nlm.nih.gov/32986097/" target="_blank" rel="noopener">Lowe et al., JAMA Intern Med 2020 (TREAT)</a>.</li>
+<li><b>Fasted training.</b> Burns a bit more fat during the session, no difference in fat lost over weeks. Scheduled here because training before the window is convenient, not because it is superior.</li>
+<li><b>Carb cycling and refeeds.</b> Plausible for training quality and adherence; evidence for extra fat loss is weak. Kept because high-carb days sit on the heaviest lifts.</li>
+<li><b>Meal timing and frequency.</b> With protein and calories matched, 3 vs 6 meals makes no measurable difference. Four meals is a convenience choice.</li>
+<li><b>Smart-scale body fat.</b> Bioimpedance readings swing several points with hydration; trend the 7-day average and the tape measure, not single readings.</li>
+</ul>
+<h3>Not supported</h3>
+<ul>
+<li>Over-the-counter "testosterone boosters," fat burners and detox products: no reliable effect in people with normal hormone levels.</li>
+<li>Very low calorie crash phases for people who lift: faster scale loss, more muscle lost, usually regained.</li>
+<li>Spot reduction: abdominal work does not remove abdominal fat; the daily push-ups and crunches build the muscle underneath.</li>
+</ul>
+<p class="small muted">Sources link to the original papers or their abstracts. Where a claim is contested, the plan takes the conservative reading.</p>
 </section>
 </div>
 
@@ -1043,19 +1081,31 @@ function renderGroceries(){
  const el=$("#grocTable");if(!el)return;
  const weekly={};const counts={H:2,M:4,L:1};
  for(const t of ["H","M","L"]){CUR_T=t;for(const m of DAYS[t].meals){const x=macros(m.items,state.adj);for(const r of x.rows){weekly[r.key]=(weekly[r.key]||0)+r.g*counts[t];}}}
- const unit={gy:["oz",1/28.35],cc:["oz",1/28.35],oats:["oz",1/28.35],rice:["oz dry",1/28.35],pb:["oz",1/28.35],oil:["fl oz",1/28.35],veg:["lb",1/453.6],chx:["lb",1/453.6],thigh:["lb",1/453.6],beef:["lb",1/453.6],sir:["lb",1/453.6],pot:["lb",1/453.6],banana:["each",1/118],egg:["eggs",1/50],salad:["servings",1/250]};
- const order=["chx","thigh","beef","sir","egg","gy","cc","oats","rice","pot","veg","banana","pb","oil","salad"];
- let h=`<div class="tblwrap"><table><thead><tr><th>Ingredient</th><th class="n">Per week</th><th class="n">Two weeks</th><th class="n">Month</th><th>Buy</th></tr></thead><tbody>`;
- const buy={chx:"bulk fresh family pack, freeze in portions",thigh:"bulk, freeze",beef:"bulk 88/12 or 90/10, freeze flat",sir:"family pack, freeze; any lean cut",egg:"",gy:"large tubs, 2–3 week fridge life",cc:"",oats:"large box",rice:"20 lb bag",pot:"10 lb bags",veg:"frozen single-vegetable bags",banana:"",pb:"large jar",oil:"large bottle",salad:"greens, cucumber, tomato for Sundays"};
- for(const k of order){if(!weekly[k])continue;const [u,f]=unit[k];const w=weekly[k]*f*HOUSE;const fmt=v=>u==="each"||u==="eggs"?Math.ceil(v):(v>=10?Math.round(v):Math.round(v*10)/10);h+=`<tr><td>${F[k].n.replace(/,.*$/,"")}</td><td class="n">${fmt(w)} ${u}</td><td class="n">${fmt(w*2)} ${u}</td><td class="n">${fmt(w*4.3)} ${u}</td><td>${buy[k]}</td></tr>`;}
+ const unit={gy:["oz",1/28.35],cc:["oz",1/28.35],oats:["oz",1/28.35],rice:["oz dry",1/28.35],pb:["oz",1/28.35],oil:["fl oz",1/28.35],veg:["lb",1/453.6],chx:["lb",1/453.6],thigh:["lb",1/453.6],beef:["lb",1/453.6],sir:["lb",1/453.6],pot:["lb",1/453.6],banana:["each",1/118],egg:["eggs",1/50],salad:["servings",1/250],tofu:["oz",1/28.35],salmon:["lb",1/453.6],tuna:["oz",1/28.35],tempeh:["oz",1/28.35],cheese:["oz",1/28.35]};
+ // US average unit prices (late 2025, warehouse/discount grocer), scaled by region
+ const base={chx:3.5,thigh:3.0,beef:5.5,sir:9.0,egg:0.30,gy:0.11,cc:0.13,oats:0.09,rice:0.05,pot:0.60,veg:1.40,banana:0.25,pb:0.15,oil:0.30,salad:1.50,tofu:0.12,salmon:9.0,tuna:0.20,tempeh:0.25,cheese:0.35};
+ const region=(PROF&&PROF.region)||1,cur=(PROF&&PROF.cur)||"$",ov=(PROF&&PROF.prices)||{};
+ const price=k=>ov[k]!==undefined?ov[k]:Math.round(base[k]*region*100)/100;
+ const order=["chx","thigh","beef","sir","tuna","salmon","tofu","tempeh","egg","gy","cc","cheese","oats","rice","pot","veg","banana","pb","oil","salad"];
+ const buy={chx:"bulk fresh family pack, freeze in portions",thigh:"bulk, freeze",beef:"bulk, freeze flat",sir:"family pack, freeze; any lean cut",egg:"",gy:"large tubs, 2–3 week fridge life",cc:"",oats:"large box",rice:"large bag",pot:"10 lb bags",veg:"frozen single-vegetable bags",banana:"",pb:"large jar",oil:"large bottle",salad:"greens, cucumber, tomato for Sundays",tofu:"extra-firm, multipack",salmon:"frozen portions",tuna:"canned, multipack",tempeh:"",cheese:"low-fat shredded"};
+ const weeks=DUR/7;let wk=0;
+ let h=`<div class="tblwrap"><table><thead><tr><th>Ingredient</th><th class="n">Per week</th><th class="n">Unit price (${cur})</th><th class="n">Week</th><th class="n">2 weeks</th><th class="n">Month</th><th class="n">Whole plan</th><th>Buy</th></tr></thead><tbody>`;
+ for(const k of order){if(!weekly[k])continue;const [u,f]=unit[k];const w=weekly[k]*f*HOUSE;const fmt=v=>u==="each"||u==="eggs"?Math.ceil(v):(v>=10?Math.round(v):Math.round(v*10)/10);const c=w*price(k);wk+=c;
+  h+=`<tr><td>${F[k].n.replace(/,.*$/,"")}</td><td class="n">${fmt(w)} ${u}</td><td class="n"><input type="number" step="0.01" min="0" class="pz" data-k="${k}" value="${price(k)}" style="width:5.5em;font:inherit;font-family:var(--mono);padding:3px 4px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)"> / ${u.replace("oz dry","oz").replace("eggs","egg").replace("servings","serving")}</td><td class="n">${cur}${c.toFixed(0)}</td><td class="n">${cur}${(c*2).toFixed(0)}</td><td class="n">${cur}${(c*4.33).toFixed(0)}</td><td class="n">${cur}${(c*weeks).toFixed(0)}</td><td>${buy[k]}</td></tr>`;}
+ const pantry=6*region*Math.max(1,HOUSE*0.8);
+ h+=`<tr><td>Pantry, spices, condiments, supplements</td><td class="n">—</td><td class="n">≈ ${cur}${pantry.toFixed(0)}/wk</td><td class="n">${cur}${pantry.toFixed(0)}</td><td class="n">${cur}${(pantry*2).toFixed(0)}</td><td class="n">${cur}${(pantry*4.33).toFixed(0)}</td><td class="n">${cur}${(pantry*weeks).toFixed(0)}</td><td>creatine, salt, oil top-ups, spices</td></tr>`;
+ const tot=wk+pantry;
+ h+=`<tr class="sum"><td>Total food</td><td class="n"></td><td class="n"></td><td class="n">${cur}${tot.toFixed(0)}</td><td class="n">${cur}${(tot*2).toFixed(0)}</td><td class="n">${cur}${(tot*4.33).toFixed(0)}</td><td class="n">${cur}${(tot*weeks).toFixed(0)}</td><td>${HOUSE>1?"for "+HOUSE+" people's portions":"for one person"} · ${cur}${(tot/7/HOUSE).toFixed(2)} per person per day</td></tr>`;
  el.innerHTML=h+`</tbody></table></div>`;
+ const tiles=$("#grocTiles");if(tiles)tiles.innerHTML=`<div class="tile"><div class="k">Every 2 weeks</div><div class="v">${cur}${(tot*2).toFixed(0)}</div><div class="d">shop list above ×2</div></div><div class="tile"><div class="k">Per month</div><div class="v">${cur}${(tot*4.33).toFixed(0)}</div><div class="d">≈ ${cur}${(tot/7/HOUSE).toFixed(2)} per person per day</div></div><div class="tile"><div class="k">Whole ${DUR}-day plan</div><div class="v">${cur}${(tot*weeks).toFixed(0)}</div><div class="d">price level ×${region} · edit any unit price to match your store</div></div>`;
+ el.querySelectorAll("input.pz").forEach(inp=>inp.addEventListener("change",()=>{const k=inp.dataset.k;const v=parseFloat(inp.value);if(!PROF)return;PROF.prices=PROF.prices||{};if(isNaN(v))delete PROF.prices[k];else PROF.prices[k]=v;try{localStorage.setItem(PK,JSON.stringify(PROF));}catch(e){}setTimeout(renderGroceries,0);}));
 }
 
 /* ---------- setup ---------- */
 function parseDays(str){const map={sun:0,mon:1,tue:2,wed:3,thu:4,fri:5,sat:6};return (str||"").toLowerCase().split(/[ ,/]+/).map(x=>map[x.slice(0,3)]).filter(x=>x!==undefined);}
 function parseBlock(d,t){const days=parseDays(d);const m=(t||"").match(/(\d{1,2}:\d{2})\s*[-–]\s*(\d{1,2}:\d{2})/);if(!days.length||!m)return null;const pad=x=>x.length===4?"0"+x:x;return{days,t:pad(m[1]),e:pad(m[2])};}
 function showSetup(on){$("#setup").hidden=!on;$("#tabs").hidden=on;document.querySelectorAll("section.view").forEach(v=>{if(on)v.classList.remove("on");});if(!on)route();}
-function fillSetup(){if(!PROF)return;const f=(id,v)=>{$("#"+id).value=v===undefined||v===null?"":v;};const metric=PROF.units==="metric";f("suUnits",PROF.units||"us");f("suStart",PROF.start);f("suDays",PROF.days);f("suSex",PROF.sex);f("suAge",PROF.age||"");f("suHeight",PROF.height?(metric?Math.round(PROF.height*2.54):PROF.height):"");f("suWeight",metric?Math.round(PROF.weight*0.4536*10)/10:PROF.weight);f("suBf",PROF.bf||"");f("suPace",PROF.pace||"auto");f("suWhen",PROF.when||"am");f("suLiftDays",PROF.liftDays||"5");f("suEquip",PROF.equip);f("suRun",PROF.run);f("suDiet",PROF.diet||"all");f("suHabit",PROF.habit);f("suHouse",PROF.house);$("#suReset").hidden=false;
+function fillSetup(){if(!PROF)return;const f=(id,v)=>{$("#"+id).value=v===undefined||v===null?"":v;};const metric=PROF.units==="metric";f("suUnits",PROF.units||"us");f("suStart",PROF.start);f("suDays",PROF.days);f("suSex",PROF.sex);f("suAge",PROF.age||"");f("suHeight",PROF.height?(metric?Math.round(PROF.height*2.54):PROF.height):"");f("suWeight",metric?Math.round(PROF.weight*0.4536*10)/10:PROF.weight);f("suBf",PROF.bf||"");f("suPace",PROF.pace||"auto");f("suWhen",PROF.when||"am");f("suLiftDays",PROF.liftDays||"5");f("suEquip",PROF.equip);f("suRun",PROF.run);f("suDiet",PROF.diet||"all");f("suHabit",PROF.habit);f("suHouse",PROF.house);f("suRegion",String(PROF.region||"1.0"));f("suCur",PROF.cur||"$");$("#suReset").hidden=false;
  const b=PROF.blocks||[];const dn=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];if(b[0]){f("suB1d",b[0].days.map(x=>dn[x]).join(","));f("suB1t",b[0].t+"-"+b[0].e);}if(b[1]){f("suB2d",b[1].days.map(x=>dn[x]).join(","));f("suB2t",b[1].t+"-"+b[1].e);}}
 $("#setupForm").addEventListener("submit",ev=>{ev.preventDefault();
  const v=id=>$("#"+id).value;const n=id=>{const x=parseFloat(v(id));return isNaN(x)?null:x;};
@@ -1064,7 +1114,7 @@ $("#setupForm").addEventListener("submit",ev=>{ev.preventDefault();
  if(metric){weight=Math.round(weight/0.4536*10)/10;if(height)height=Math.round(height/2.54*2)/2;}
  if(weight<80||weight>450){$("#suStatus").textContent="Check the weight value.";return;}
  const age=n("suAge");if(age!==null&&age<18){$("#suStatus").textContent="This plan is for adults (18+).";return;}
- const p={units:v("suUnits"),start:v("suStart")||new Date().toISOString().slice(0,10),days:parseInt(v("suDays"),10),sex:v("suSex"),age:age,height:height,weight:weight,bf:n("suBf"),pace:v("suPace"),when:v("suWhen"),liftDays:v("suLiftDays"),equip:v("suEquip"),run:v("suRun"),diet:v("suDiet"),habit:v("suHabit"),house:v("suHouse"),blocks:[parseBlock(v("suB1d"),v("suB1t")),parseBlock(v("suB2d"),v("suB2t"))].filter(Boolean)};
+ const p={units:v("suUnits"),start:v("suStart")||new Date().toISOString().slice(0,10),days:parseInt(v("suDays"),10),sex:v("suSex"),age:age,height:height,weight:weight,bf:n("suBf"),pace:v("suPace"),when:v("suWhen"),liftDays:v("suLiftDays"),equip:v("suEquip"),run:v("suRun"),diet:v("suDiet"),habit:v("suHabit"),house:v("suHouse"),region:parseFloat(v("suRegion"))||1,cur:(v("suCur")||"$").trim()||"$",prices:(PROF&&PROF.prices)||{},blocks:[parseBlock(v("suB1d"),v("suB1t")),parseBlock(v("suB2d"),v("suB2t"))].filter(Boolean)};
  PROF=p;applyProfile();try{localStorage.setItem(PK,JSON.stringify(PROF));}catch(e){}
  curOff=Math.max(0,Math.min(DUR-1,todayOff()));renderLiftTable();renderAll();showSetup(false);location.hash="#today";});
 $("#suReset").addEventListener("click",()=>{if(!$("#suReset").dataset.armed){$("#suReset").dataset.armed="1";$("#suReset").textContent="Tap again to erase everything";return;}try{localStorage.removeItem(PK);localStorage.removeItem(LS);localStorage.removeItem(LSD);}catch(e){}location.hash="";location.reload();});

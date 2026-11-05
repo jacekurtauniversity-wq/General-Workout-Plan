@@ -162,27 +162,32 @@ ul.cues li{margin:1px 0}
 
 <section id="setup" class="block" style="margin-top:8px">
 <h2 style="margin-top:0">Set up your plan</h2>
-<p class="small muted">Takes two minutes. Everything can be changed later with "Edit my setup"; your log is kept.</p>
+<p class="small muted">Only your weight is required; anything you leave blank gets a sensible default and can be changed later with "Edit my setup" without losing your log.</p>
 <form class="ci" id="setupForm">
-  <label>Start date <input type="date" id="suStart" required></label>
-  <label>Plan length <select id="suDays"><option value="45">45 days</option><option value="60">60 days</option><option value="90">90 days</option><option value="120" selected>120 days</option></select></label>
-  <label>Sex (for the calorie estimate) <select id="suSex"><option value="m">Male</option><option value="f">Female</option></select></label>
-  <label>Age <input type="number" id="suAge" min="16" max="80" required placeholder="27"></label>
-  <label>Height (in) <input type="number" id="suHeight" min="55" max="84" step="0.5" required placeholder="73"></label>
-  <label>Weight (lb) <input type="number" id="suWeight" min="90" max="450" step="0.1" required placeholder="269"></label>
-  <label>Body fat % (optional) <input type="number" id="suBf" min="4" max="60" step="0.1" placeholder="scale or estimate"></label>
-  <label>Pace <select id="suPace"><option value="agg">Aggressive · ~1% of bodyweight a week</option><option value="std" selected>Steady · ~0.75% a week</option><option value="gen">Gentle · ~0.5% a week</option></select></label>
+  <label>Units <select id="suUnits"><option value="us" selected>lb / inches</option><option value="metric">kg / cm</option></select></label>
+  <label>Weight <input type="number" id="suWeight" min="35" max="450" step="0.1" required placeholder="lb, required"></label>
+  <label>Height <input type="number" id="suHeight" min="48" max="230" step="0.5" placeholder="inches, optional"></label>
+  <label>Age <input type="number" id="suAge" min="16" max="85" placeholder="optional (30)"></label>
+  <label>Sex <select id="suSex"><option value="m">Male</option><option value="f">Female</option><option value="x">Prefer not to say</option></select></label>
+  <label>Body fat % (optional) <input type="number" id="suBf" min="4" max="65" step="0.1" placeholder="scale, scan or guess"></label>
+  <label>Start date <input type="date" id="suStart"></label>
+  <label>Plan length <select id="suDays"><option value="45">45 days</option><option value="60">60 days</option><option value="90" selected>90 days</option><option value="120">120 days</option></select></label>
+  <label>Pace <select id="suPace"><option value="auto" selected>Pick for me</option><option value="agg">Aggressive · ~1% of bodyweight a week</option><option value="std">Steady · ~0.75% a week</option><option value="gen">Gentle · ~0.5% a week</option></select></label>
+  <label>Training time <select id="suWhen"><option value="am" selected>Morning (fasted, before work)</option><option value="pm">Evening (after work)</option></select></label>
+  <label>Lifting days per week <select id="suLiftDays"><option value="5" selected>5 (Upper/Lower/Upper/Lower/Full)</option><option value="3">3 (Mon/Wed/Fri full body)</option></select></label>
   <label>Equipment <select id="suEquip"><option value="full">Full gym (barbells, machines)</option><option value="machines">Machines and dumbbells only</option><option value="home">Dumbbells only (home)</option></select></label>
   <label>Running <select id="suRun"><option value="yes" selected>Yes, build up to 5 miles</option><option value="no">No running (walks instead)</option></select></label>
-  <label>Daily push-ups + crunches <select id="suHabit"><option value="0">No</option><option value="50">50 each</option><option value="100">100 each</option></select></label>
-  <label>People eating these meals <select id="suHouse"><option value="1" selected>Just me</option><option value="1.5">Me + a partner at half portions</option><option value="2">Two full portions</option></select></label>
-  <label>Fixed block 1 (class/work) days <input type="text" id="suB1d" placeholder="Mon,Wed"></label>
-  <label>Block 1 time <input type="text" id="suB1t" placeholder="10:10-11:25"></label>
-  <label>Fixed block 2 days <input type="text" id="suB2d" placeholder="Tue,Thu"></label>
-  <label>Block 2 time <input type="text" id="suB2t" placeholder="14:40-15:55"></label>
-  <div class="actions"><button class="btn" type="submit">Build my plan</button><button class="btn ghost" type="button" id="suCancel" hidden>Cancel</button><span class="status" id="suStatus"></span></div>
+  <label>Food <select id="suDiet"><option value="all" selected>Everything</option><option value="nored">No red meat</option><option value="pesc">Pescatarian</option><option value="veg">Vegetarian (eggs + dairy)</option></select></label>
+  <label>Daily push-ups + crunches <select id="suHabit"><option value="0" selected>No</option><option value="50">50 each</option><option value="100">100 each</option></select></label>
+  <label>People eating these meals <select id="suHouse"><option value="1" selected>Just me</option><option value="1.5">Me + one at half portions</option><option value="2">Two full portions</option></select></label>
+  <label>Fixed block 1 (class/work) days <input type="text" id="suB1d" placeholder="e.g. Mon,Wed"></label>
+  <label>Block 1 time <input type="text" id="suB1t" placeholder="e.g. 10:10-11:25"></label>
+  <label>Fixed block 2 days <input type="text" id="suB2d" placeholder="e.g. Tue,Thu"></label>
+  <label>Block 2 time <input type="text" id="suB2t" placeholder="e.g. 14:40-15:55"></label>
+  <div class="actions"><button class="btn" type="submit">Build my plan</button><button class="btn ghost" type="button" id="suCancel" hidden>Cancel</button><button class="btn ghost" type="button" id="suReset" hidden>Start over (erase log)</button><span class="status" id="suStatus"></span></div>
 </form>
-<p class="small muted">The plan: 16:8 fasting with training in the morning, carbs cycled high on the two heaviest lift days, ~0.85 g protein per lb, five short lifting sessions a week (upper/lower/upper/lower/full body), a walk-jog progression to 5K and beyond, meal prep twice a week, and a weekly check-in that adjusts your starch portions to your real rate of loss. It is not medical advice; if you have a condition or take medication, talk to a clinician first.</p>
+<div class="note warn small"><b>Before you start.</b> This is a general fat-loss program, not medical advice. Don't use it if you are pregnant, breastfeeding, under 18, have a history of an eating disorder, or have a condition or medication affected by fasting or calorie restriction (diabetes, heart, kidney, thyroid) without a clinician's say-so. Stop and get checked if you feel faint, have chest pain, or your performance drops for more than two weeks in a row.</div>
+<p class="small muted">What it builds: 16:8 fasting around your training time, carbs cycled high on the two heaviest lift days, ~0.8–0.9 g protein per lb of bodyweight, simple compound lifting, a walk-to-run progression (optional), meal prep twice a week, a grocery list scaled to your portions, and a weekly check-in that adjusts starch to your real rate of loss. Calories never go below 1,500 (men) or 1,250 (women).</p>
 </section>
 <nav class="tabs" id="tabs">
   <a href="#today">Today</a>
@@ -293,7 +298,7 @@ ul.cues li{margin:1px 0}
 <!-- ============ SCHEDULE ============ -->
 <section class="view" id="v-schedule">
 <h2>The clock</h2>
-<p>Every day keeps the same skeleton: wake 05:15, train 06:00, eat 11:00–19:00, fast 19:00–11:00. If you entered fixed blocks (class or work) in setup, the Today tab moves any meal that collides with them; the fast stays 16 hours or more. Day 1 is Thursday Nov 5: Lower B, high carbs, and the first fasted morning. Wednesday night Nov 4, eat your last meal by 19:00 so the first fast starts on time.</p>
+<p>Morning trainers: wake 05:15, train 06:00, eat 11:00–19:00. Evening trainers: eat 12:00–20:00, lift 17:30, run early on run days. The Today tab shows your version; If you entered fixed blocks (class or work) in setup, the Today tab moves any meal that collides with them; the fast stays 16 hours or more. Day 1 is Thursday Nov 5: Lower B, high carbs, and the first fasted morning. Wednesday night Nov 4, eat your last meal by 19:00 so the first fast starts on time.</p>
 <div class="seg" id="daySeg">
   <button data-d="lift" class="on">Lift day (Mon·Wed·Fri)</button>
   <button data-d="liftrun">Lift + run (Tue·Thu)</button>
@@ -383,8 +388,8 @@ ul.cues li{margin:1px 0}
 
 <!-- ============ LIFTING ============ -->
 <section class="view" id="v-lifting">
-<h2>Lifting · 06:00 Mon–Fri · 55 minutes</h2>
-<p>Upper / Lower / Upper / Lower / Full body, Mon–Fri. Every muscle twice a week with basic lifts, machines welcome. Pick a starting weight you could do for 2 more reps than written. When you hit every rep in every set with clean form, add 5 lb (10 lb on squat and deadlift) the next week. If you miss reps two sessions in a row, drop 10% and build back. Rest 2–3 min on the main lift, 60–90 s on everything else.</p>
+<h2>Lifting · 55 minutes a session</h2>
+<p>Five days: Upper / Lower / Upper / Lower / Full body. Three days: Lower A Mon, Upper A Wed, Full body Fri. Every muscle twice a week with basic lifts, machines welcome. Pick a starting weight you could do for 2 more reps than written. When you hit every rep in every set with clean form, add 5 lb (10 lb on squat and deadlift) the next week. If you miss reps two sessions in a row, drop 10% and build back. Rest 2–3 min on the main lift, 60–90 s on everything else.</p>
 
 <div id="liftTable"></div>
 <p class="small">Every exercise has a Watch link (opens a YouTube demo in a new tab). No back squats, deadlifts off the floor, hanging work or hip thrusts: leg press and hack squat carry the squat pattern, RDLs carry the hinge, pulldowns carry the pull-up. Every exercise has three swaps for a crowded gym or a missing machine; the Today tab shows them next to each lift. Pick one swap and stick with it for a phase so the log stays comparable.</p>
@@ -491,18 +496,28 @@ ul.cues li{margin:1px 0}
 const PK="stockbuild-profile-v1";
 let PROF=null;try{PROF=JSON.parse(localStorage.getItem(PK)||"null");}catch(e){}
 const START={date:"2026-01-05",weight:200,height:70,bfHi:30,bfLo:25,age:30,sex:"m"};
-let DUR=120,PACE=0.0075,WEEKLY_PLAN=[],MAINT=2800,DEF=750,EQUIP="full",RUNNING=true,HABIT=0,HOUSE=1,BLOCKS=[];
+let DUR=90,PACE=0.0075,WEEKLY_PLAN=[],MAINT=2800,DEF=750,EQUIP="full",RUNNING=true,HABIT=0,HOUSE=1,BLOCKS=[],WHEN="am",LIFTDAYS=5,DIET="all",PACE_NOTE="";
+function estBF(bmi,age,sex){const sx=sex==="f"?0:1;return Math.max(6,Math.min(55,1.2*bmi+0.23*age-10.8*sx-5.4));}
 function applyProfile(){
  if(!PROF)return;
- START.date=PROF.start;START.weight=PROF.weight;START.height=PROF.height;START.age=PROF.age;START.sex=PROF.sex;
- START.bfHi=PROF.bf||(PROF.sex==="m"?28:36);START.bfLo=Math.max(5,START.bfHi-5);
- DUR=PROF.days;PACE={agg:0.01,std:0.0075,gen:0.005}[PROF.pace]||0.0075;EQUIP=PROF.equip;RUNNING=PROF.run!=="no";HABIT=parseInt(PROF.habit||0,10);HOUSE=parseFloat(PROF.house||1);BLOCKS=PROF.blocks||[];
- const kg=PROF.weight*0.4536,cm=PROF.height*2.54;
- let bmr;if(PROF.bf){const lean=kg*(1-PROF.bf/100);bmr=370+21.6*lean;}else{bmr=10*kg+6.25*cm-5*PROF.age+(PROF.sex==="m"?5:-161);}
- MAINT=Math.round(bmr*1.5);
- DEF={agg:1000,std:750,gen:500}[PROF.pace]||750;
- const minIntake=PROF.sex==="m"?1600:1300;if(MAINT-DEF<minIntake)DEF=Math.max(300,MAINT-minIntake);
- WEEKLY_PLAN=[];const w0=PROF.weight;for(let w=0;w<Math.ceil(DUR/7)+1;w++){const base=w0*PACE*(1-0.05*Math.floor(w/4));WEEKLY_PLAN.push(w===0?w0*0.022:w===1?w0*0.013:base);}
+ const sex=PROF.sex||"m";const age=PROF.age||30;const height=PROF.height||(sex==="f"?64:69);const weight=PROF.weight;
+ START.date=PROF.start||new Date().toISOString().slice(0,10);START.weight=weight;START.height=height;START.age=age;START.sex=sex;
+ const kg=weight*0.4536,cm=height*2.54;const bmi=kg/((cm/100)**2);
+ const bf=PROF.bf||estBF(bmi,age,sex==="x"?"m":sex);
+ START.bfHi=Math.round(bf*10)/10;START.bfLo=Math.max(5,START.bfHi-5);
+ DUR=PROF.days||90;EQUIP=PROF.equip||"full";RUNNING=PROF.run!=="no";HABIT=parseInt(PROF.habit||0,10);HOUSE=parseFloat(PROF.house||1);BLOCKS=PROF.blocks||[];WHEN=PROF.when||"am";LIFTDAYS=parseInt(PROF.liftDays||5,10);DIET=PROF.diet||"all";
+ // pace: auto by leanness; cap for lean people
+ const leanCut=sex==="f"?24:16,veryLean=sex==="f"?20:12;
+ let pace=PROF.pace||"auto";PACE_NOTE="";
+ if(pace==="auto"){pace=bf>=(sex==="f"?35:28)?"agg":bf>=leanCut?"std":"gen";PACE_NOTE="Pace chosen from your body fat.";}
+ if(bf<veryLean&&pace!=="gen"){pace="gen";PACE_NOTE="You're already lean, so the pace is capped at gentle to protect muscle.";}
+ else if(bf<leanCut&&pace==="agg"){pace="std";PACE_NOTE="Aggressive isn't advisable at your body fat; set to steady.";}
+ PACE={agg:0.01,std:0.0075,gen:0.005}[pace];PROF.paceUsed=pace;
+ let bmr;if(PROF.bf){const lean=kg*(1-PROF.bf/100);bmr=370+21.6*lean;}else{bmr=10*kg+6.25*cm-5*age+(sex==="f"?-161:5);}
+ const act=LIFTDAYS===5?1.5:1.4;MAINT=Math.round(bmr*act);
+ DEF=Math.round(Math.min({agg:1000,std:750,gen:500}[pace],weight*PACE*3500/7));
+ const floor=sex==="f"?1250:1500;if(MAINT-DEF<floor)DEF=Math.max(250,MAINT-floor);
+ WEEKLY_PLAN=[];for(let w=0;w<Math.ceil(DUR/7)+1;w++){const base=weight*PACE*(1-0.05*Math.floor(w/4));WEEKLY_PLAN.push(w===0?weight*0.02:w===1?weight*0.012:base);}
 }
 applyProfile();
 function WATERLB(){return Math.round(START.weight*0.018);}
@@ -526,29 +541,34 @@ const F={
  cc:{n:"Cottage cheese 2% (4%: +3 g fat, +30 kcal)",p:11,c:4,f:2.5},
  sir:{n:"Sirloin steak, raw",p:21.5,c:0,f:8},
  egg:{n:"Whole eggs (2 large = 100 g)",p:12.6,c:0,f:10},
- salad:{n:"Salad: greens, cucumber, tomato",p:1.5,c:3,f:0.2}
+ salad:{n:"Salad: greens, cucumber, tomato",p:1.5,c:3,f:0.2},
+ tofu:{n:"Extra-firm tofu",p:17,c:3,f:9},
+ salmon:{n:"Salmon, raw",p:20,c:0,f:13},
+ tuna:{n:"Canned tuna, drained",p:26,c:0,f:1},
+ tempeh:{n:"Tempeh",p:20,c:8,f:11},
+ cheese:{n:"Low-fat shredded cheese",p:25,c:3,f:12}
 };
 /* starch items scale with the adjustment level; others are fixed */
 const STARCH=new Set(["oats","rice","pot","banana"]);
 const DAYS={
  H:{label:"High carb",cls:"hi",meals:[
    {t:"11:00",name:"Meal 1 · Yogurt power bowl",items:[["gy",450],["oats",60],["pb",16],["banana",118]],how:"Yogurt, oats (dry or soaked overnight), sliced banana, peanut butter, cinnamon, 5 g (1 tsp) creatine stirred in. No whey: 1¾ cups of yogurt carries the protein for a third of the price."},
-   {t:"14:30",name:"Meal 2 · Chicken rice bowl",items:[["chx",225],["rice",90],["veg",200],["oil",10]],how:"Prepped chicken over rice, veg microwaved, oil + salsa or hot sauce over the top."},
-   {t:"18:30",name:"Meal 3 · Beef & thigh plate",items:[["beef",100],["thigh",100],["pot",300],["veg",200],["oil",10]],how:"Beef and diced chicken thigh browned together with onion and garlic (half-and-half cuts the cost, keeps the iron), baked potato with the oil and salt, veg. Mustard and hot sauce are free."},
-   {t:"18:50",name:"Meal 4 · Night protein",items:[["cc",200]],how:"Cottage cheese, pepper or cinnamon. Window closes 19:00."}]},
+   {t:"14:30",name:"Meal 2 · Protein rice bowl",items:[["chx",225],["rice",90],["veg",200],["oil",10]],how:"Prepped chicken over rice, veg microwaved, oil + salsa or hot sauce over the top."},
+   {t:"18:30",name:"Meal 3 · Protein & potato plate",items:[["beef",100],["thigh",100],["pot",300],["veg",200],["oil",10]],how:"Beef and diced chicken thigh browned together with onion and garlic (half-and-half cuts the cost, keeps the iron), baked potato with the oil and salt, veg. Mustard and hot sauce are free."},
+   {t:"18:50",name:"Meal 4 · Night protein",items:[["cc",200]],how:"Cottage cheese, pepper or cinnamon. Last food of the day; the window closes 10 minutes later."}]},
  M:{label:"Moderate",cls:"mod",meals:[
    {t:"11:00",name:"Meal 1 · Yogurt power bowl",items:[["gy",450],["oats",40],["pb",16]],how:"Same bowl, smaller oats, no banana."},
-   {t:"14:30",name:"Meal 2 · Chicken rice bowl",items:[["chx",225],["rice",60],["veg",200],["oil",14]],how:"Smaller rice portion, a full tablespoon of oil."},
-   {t:"18:30",name:"Meal 3 · Beef & thigh plate",items:[["beef",100],["thigh",100],["pot",200],["veg",200],["oil",14]],how:"7.1 oz potato instead of 300."},
-   {t:"18:50",name:"Meal 4 · Night protein",items:[["cc",200]],how:"Cottage cheese. Window closes 19:00."}]},
+   {t:"14:30",name:"Meal 2 · Protein rice bowl",items:[["chx",225],["rice",60],["veg",200],["oil",14]],how:"Smaller rice portion, a full tablespoon of oil."},
+   {t:"18:30",name:"Meal 3 · Protein & potato plate",items:[["beef",100],["thigh",100],["pot",200],["veg",200],["oil",14]],how:"7.1 oz potato instead of 300."},
+   {t:"18:50",name:"Meal 4 · Night protein",items:[["cc",200]],how:"Cottage cheese. Last food of the day."}]},
  L:{label:"Low carb",cls:"lo",meals:[
    {t:"11:00",name:"Meal 1 · Yogurt & peanut butter",items:[["gy",450],["pb",24]],how:"No oats. Extra peanut butter, cinnamon."},
-   {t:"14:30",name:"Meal 2 · Chicken, eggs & greens",items:[["chx",225],["egg",100],["veg",300],["oil",14]],how:"Chicken and two fried or scrambled eggs over a big pile of veg."},
-   {t:"18:30",name:"Meal 3 · Steak night",items:[["sir",280],["salad",250],["veg",150],["oil",10]],how:"10 oz strip or sirloin, big salad with the oil and vinegar, veg on the side. The weekly treat, earned."},
-   {t:"18:50",name:"Meal 4 · Night protein",items:[["cc",200]],how:"Cottage cheese. Window closes 19:00."}]}
+   {t:"14:30",name:"Meal 2 · Protein, eggs & greens",items:[["chx",225],["egg",100],["veg",300],["oil",14]],how:"Chicken and two fried or scrambled eggs over a big pile of veg."},
+   {t:"18:30",name:"Meal 3 · Sunday main",items:[["sir",280],["salad",250],["veg",150],["oil",10]],how:"10 oz strip or sirloin, big salad with the oil and vinegar, veg on the side. The weekly treat, earned."},
+   {t:"18:50",name:"Meal 4 · Night protein",items:[["cc",200]],how:"Cottage cheese. Last food of the day."}]}
 };
 const SCHED={
- lift:[["05:15","Wake. 500 ml water with 1 scoop Dr. Berg electrolyte powder + ½ tsp salt. Black coffee if you want it. Vitamin D3 with Meal 1 later (it needs fat)."],["05:40","Leave for the gym. Fasted."],["06:00","Lift (55 min incl. warm-up). Log the main lift."],["07:15","Shower. Second coffee by 09:00 at the latest."],["07:45","Focus block 1, fasted."],["11:00","Meal 1 · yogurt power bowl + 5 g creatine. Window opens."],["14:30","Meal 2 · chicken rice bowl. Eat it 60–90 min before any long afternoon/evening study block."],["18:30","Meal 3 · beef & potato plate."],["18:50","Meal 4 · cottage cheese. Window closes 19:00."],["19:15","Wednesday only: 25-min re-prep (chicken, beef, rice for Thu–Sat)."],["20:30","Phone down. Prep tomorrow's gym bag and portions."],["21:00","Magnesium if you're using it. Room cool and dark."],["21:30","Lights out. 7.5 h minimum."]],
+ lift:[["05:15","Wake. 500 ml water with ½ tsp salt + ¼ tsp lite salt (or electrolyte powder + salt). Black coffee if you want it."],["05:40","Leave for the gym. Fasted."],["06:00","Lift (55 min incl. warm-up). Log the main lift."],["07:15","Shower. Second coffee by 09:00 at the latest."],["07:45","Focus block 1, fasted."],["11:00","Meal 1 · yogurt power bowl + 5 g creatine. Window opens."],["14:30","Meal 2 · chicken rice bowl. Eat it 60–90 min before any long afternoon/evening study block."],["18:30","Meal 3 · beef & potato plate."],["18:50","Meal 4 · cottage cheese. Window closes 19:00."],["19:15","Wednesday only: 25-min re-prep (chicken, beef, rice for Thu–Sat)."],["20:30","Phone down. Prep tomorrow's gym bag and portions."],["21:00","Magnesium if you're using it. Room cool and dark."],["21:30","Lights out. 7.5 h minimum."]],
  liftrun:[["05:15","Wake. Salt water, coffee."],["06:00","Lower-body lift (55 min)."],["07:45","Focus block 1, fasted."],["11:00","Meal 1. Window opens."],["14:30","Meal 2, the fuel for the run."],["17:45","Change, 5-min walk warm-up."],["18:00","Run session (see Running tab, 20–34 min). Thursday runs start week 7."],["18:40","Meal 3 right after the run."],["18:55","Meal 4. Window closes 19:00."],["21:30","Lights out."]],
  sat:[["06:30","Wake (one hour of grace). Salt water, coffee."],["08:00","Long run, fasted. Walk 5 min first."],["09:00","Stretch 10 min, shower."],["11:00","Meal 1."],["14:30","Meal 2."],["16:00","Optional 30-min walk."],["18:30","Meal 3."],["18:50","Meal 4. Window closes 19:00."],["22:00","Lights out (half-hour later is fine)."]],
  sun:[["07:00","Weigh-in, waist, neck. Save the check-in on this page."],["09:00","45–60 min easy walk. Nothing harder: this is the only full rest day."],["11:00","Meal 1 · yogurt & peanut butter."],["14:30","Meal 2 · chicken, eggs & greens."],["16:00","Meal prep (90 min): chicken, beef, rice, potatoes, oat bags. See the Meals tab table."],["18:30","Meal 3 · steak night."],["18:50","Meal 4. Window closes 19:00."],["21:30","Lights out. Monday is squat day."]]
@@ -568,11 +588,19 @@ function amt(r){const k=r.key,g=r.g;
  if(k==="pot")return g>=280?"1 large ("+(g/OZ).toFixed(0)+" oz)":"1 medium ("+(g/OZ).toFixed(0)+" oz)";
  if(CUP[k])return frac(g/CUP[k])+" cup"+(g/CUP[k]>1.1?"s":"");
  return (g/OZ).toFixed(1).replace(/\.0$/,"")+" oz";}
+
+function dietSwap(k,g){
+ if(DIET==="all")return[k,g];
+ if(DIET==="nored"){if(k==="beef")return["thigh",g];if(k==="sir")return["chx",Math.round(g*0.95)];return[k,g];}
+ if(DIET==="pesc"){if(k==="beef"||k==="thigh")return["tuna",Math.round(g*0.75)];if(k==="sir")return["salmon",g];if(k==="chx")return["tuna",Math.round(g*0.85)];return[k,g];}
+ if(DIET==="veg"){if(k==="chx")return["tofu",Math.round(g*1.35)];if(k==="beef"||k==="thigh")return["tempeh",g];if(k==="sir")return["egg",Math.round(g*0.9)];return[k,g];}
+ return[k,g];
+}
 function targetKcal(t){const avg=MAINT-DEF;return t==="H"?avg*1.12:t==="L"?avg*0.89:avg*0.97;}
 const BASEK={H:2327,M:2022,L:1850};
 function kscale(t){return targetKcal(t)/BASEK[t];}
 let CUR_T="M";
-function macros(items,adj){let p=0,c=0,f=0;const rows=[];for(const [k,g0] of items){const ks=kscale(CUR_T);const g=STARCH.has(k)?Math.round(g0*ks*(1+0.12*adj)/5)*5:Math.round(g0*ks/5)*5;const o=F[k];const pp=o.p*g/100,cc=o.c*g/100,ff=o.f*g/100;p+=pp;c+=cc;f+=ff;rows.push({key:k,name:o.n,g,p:pp,c:cc,f:ff,kcal:pp*4+cc*4+ff*9});}return{rows,p,c,f,kcal:p*4+c*4+f*9};}
+function macros(items,adj){let p=0,c=0,f=0;const rows=[];for(let [k,g0] of items){[k,g0]=dietSwap(k,g0);const ks=kscale(CUR_T);const g=STARCH.has(k)?Math.round(g0*ks*(1+0.12*adj)/5)*5:Math.round(g0*ks/5)*5;const o=F[k];const pp=o.p*g/100,cc=o.c*g/100,ff=o.f*g/100;p+=pp;c+=cc;f+=ff;rows.push({key:k,name:o.n,g,p:pp,c:cc,f:ff,kcal:pp*4+cc*4+ff*9});}return{rows,p,c,f,kcal:p*4+c*4+f*9};}
 function dayTotals(t,adj){CUR_T=t;let p=0,c=0,f=0;for(const m of DAYS[t].meals){const x=macros(m.items,adj);p+=x.p;c+=x.c;f+=x.f;}return{p,c,f,kcal:p*4+c*4+f*9};}
 function weekAvg(adj){const H=dayTotals("H",adj).kcal,M=dayTotals("M",adj).kcal,L=dayTotals("L",adj).kcal;return (2*H+4*M+L)/7;}
 function navyBF(waist,neck,h){if(!(waist>neck)||!h)return null;const v=86.010*Math.log10(waist-neck)-70.041*Math.log10(h)+36.76;return v>2&&v<70?v:null;}
@@ -605,8 +633,8 @@ function renderOverview(){
  $("#kcalM").textContent=Math.round(dayTotals("M",a).kcal)+" kcal";
  $("#kcalL").textContent=Math.round(dayTotals("L",a).kcal)+" kcal";
  $("#kcalAvg").textContent=Math.round(weekAvg(a))+" kcal";
- const eb=$("#eyebrow");if(eb&&PROF)eb.textContent=`${DUR}-day cut · starts ${fmtDate(START.date)} · lift Mon–Fri · 16:8 fasting · carb cycling`;const sl=$("#subline");if(sl&&PROF)sl.textContent=`${START.weight} lb → ~${Math.round(projectedAt(DUR/7))} lb by ${fmtDate(addDays(START.date,DUR))}. Open the Today tab each morning.`;
- $("#deficitLine").textContent=`Estimated maintenance ${MAINT.toLocaleString()} kcal a day (${PROF&&PROF.bf?"Katch-McArdle from your body fat":"Mifflin-St Jeor"}, activity ×1.5). The plan eats about ${DEF} kcal under that, targeting roughly ${r1(START.weight*PACE)} lb a week after the first two weeks of water loss. Faster than ~1% of bodyweight a week is where strength drops and loose-skin risk climbs; slower keeps more muscle but takes longer.`;
+ const eb=$("#eyebrow");if(eb&&PROF)eb.textContent=`${DUR}-day cut · starts ${fmtDate(START.date)} · lift ${LIFTDAYS===5?"Mon–Fri":"Mon/Wed/Fri"} ${WHEN==="pm"?"evenings":"mornings"} · 16:8 fasting · carb cycling`;const sl=$("#subline");if(sl&&PROF)sl.textContent=`${START.weight} lb → ~${Math.round(projectedAt(DUR/7))} lb by ${fmtDate(addDays(START.date,DUR))}. Open the Today tab each morning.`;
+ $("#deficitLine").textContent=`Estimated maintenance ${MAINT.toLocaleString()} kcal a day (${PROF&&PROF.bf?"Katch-McArdle from your body fat":"Mifflin-St Jeor"}, activity ×${LIFTDAYS===5?"1.5":"1.4"}). The plan eats about ${DEF} kcal under that, targeting roughly ${r1(START.weight*PACE)} lb a week after the first two weeks of water loss. Faster than ~1% of bodyweight a week is where strength drops and loose-skin risk climbs; slower keeps more muscle but takes longer. ${PACE_NOTE}`;
  const T=(typeof tdeeEstimate==="function")?tdeeEstimate():null;if(T)$("#tdeeNote").textContent=`Measured maintenance from your own logs: ~${T.tdee} kcal/day over ${T.days} days (${T.dW} lb). The plan assumed ${MAINT}; the check-in adjusts to the real number.`;
 }
 let curDayType="H";
@@ -779,7 +807,7 @@ function dayPlan(off){
  const dayN=off+1;
  const wk=Math.floor((off+3)/7)+1; // training week, Mon-based; Thu Nov 5 = week 1
  const phase=dayN<=Math.round(DUR*0.375)?1:dayN<=Math.round(DUR*0.75)?2:3;
- const type=(dow===1||dow===4)?"H":dow===0?"L":"M";
+ const type=(LIFTDAYS===5?(dow===1||dow===4):(dow===1||dow===5))?"H":dow===0?"L":"M";
  const deload=[6,12,17].includes(wk);
  const md=iso.slice(5);const holiday=(d.getMonth()===10&&dow===4&&d.getDate()>=22&&d.getDate()<=28)?"Thanksgiving":md==="12-25"?"Christmas":md==="01-01"?"New Year":null;
  const refeed=DUR>=90&&dayN===Math.round(DUR/2);
@@ -788,7 +816,8 @@ function dayPlan(off){
  const tt=dayTotals(type,a);
  // training
  let train=null,run=null;
- if(dow>=1&&dow<=5){const L=LIFT[dow];train={name:L.name,rows:L.ex.map(e=>{let nm=e[0],alts=e[2];if(EQUIP!=="full"&&/barbell|EZ-bar|hack|cable|machine|lat pulldown|leg press|extension|curl machine|row/i.test(nm)){const pick=alts.find(a=>EQUIP==="home"?/DB|dumbbell|band|bodyweight|push|goblet|lunge|step|split|plank|dead bug|Nordic|ball/i.test(a):/machine|DB|dumbbell|cable|Smith|hack|leg press|goblet|lunge|split|step|band/i.test(a));if(pick){alts=[nm].concat(alts.filter(a=>a!==pick));nm=pick;}}return[nm,e[1][phase-1],alts];})};}
+ const liftDow=LIFTDAYS===5?dow:(dow===1?2:dow===3?1:dow===5?5:0);
+ if(liftDow>=1&&liftDow<=5){const L=LIFT[liftDow];train={name:L.name,rows:L.ex.map(e=>{let nm=e[0],alts=e[2];if(EQUIP!=="full"&&/barbell|EZ-bar|hack|cable|machine|lat pulldown|leg press|extension|curl machine|row/i.test(nm)){const pick=alts.find(a=>EQUIP==="home"?/DB|dumbbell|band|bodyweight|push|goblet|lunge|step|split|plank|dead bug|Nordic|ball/i.test(a):/machine|DB|dumbbell|cable|Smith|hack|leg press|goblet|lunge|split|step|band/i.test(a));if(pick){alts=[nm].concat(alts.filter(a=>a!==pick));nm=pick;}}return[nm,e[1][phase-1],alts];})};}
  if(RUNNING&&(dow===2||dow===6||(dow===4&&wk>=6)))run=runFor(wk,dow);
  if(!RUNNING&&(dow===2||dow===6))run=dow===6?"45–60 min brisk walk, hills if you have them":"30 min brisk walk";
  if(dow===4&&wk<6&&!run)run=null;
@@ -822,25 +851,30 @@ function dayPlan(off){
   const m1=tmin(meals[0].t);if(m1>=bs-20&&m1<=be)meals[0].t=tstr(be+5);
   const m2=tmin(meals[1].t);if(m2>=bs-20&&m2<=be)meals[1].t=tstr(Math.max(tmin(meals[0].t)+150,bs-55));
   const m3=tmin(meals[2].t);if(m3>=bs-20&&m3<=be)meals[2].t=tstr(be+5);}
+ if(WHEN==="pm"){meals[0].t="12:00";meals[1].t="15:30";meals[2].t="19:15";meals[3].t="19:45";
+  if(cls){const bs=tmin(cls.t),be=tmin(cls.e);for(const m of meals){const mt=tmin(m.t);if(mt>=bs-20&&mt<=be)m.t=tstr(be+5);}}}
  // timeline
  const tl=[];
  const drink="500 ml water with ½ tsp salt + ¼ tsp lite salt (or an electrolyte powder plus the salt). Coffee if you want it.";
  if(dow===6){tl.push(["06:30","Wake. "+drink]);tl.push(["08:00",run]);tl.push(["09:00","Stretch 10 min, shower."]);}
  else if(dow===0){tl.push(["07:00","Weigh-in, waist, neck. Log on Check-in."]);tl.push(["09:00","45–60 min easy walk. Only rest day: nothing harder."]);}
+ else if(!train){tl.push(["06:30","Wake. "+drink]);tl.push(["07:00",run?"Easy day: the run is this evening. 20-min walk now if you like.":"Rest day from lifting: 30-min walk."]);}
+ else if(WHEN==="pm"){tl.push(["06:30","Wake. "+drink]);tl.push(["17:30",train.name+" (55 min incl. 8-min warm-up). Log each lift."+(deload?" DELOAD: 60%, 2 sets.":"")]);}
  else{tl.push(["05:15","Wake. "+drink]);tl.push(["06:00",train.name+" (55 min incl. 8-min warm-up). Log each lift."+(deload?" DELOAD: 60%, 2 sets.":"")]);
-  tl.push(["07:45","Focus block 1 (fasted, sharpest hours). Second coffee by 09:00, none after noon."]);
+  if(WHEN==="am")tl.push(["07:45","Focus block 1 (fasted, sharpest hours). Second coffee by 09:00, none after noon."]);else tl.push(["08:00","Focus block 1 (fasted). Coffee is fine; none after 14:00."]);
   if(cls)tl.push([cls.t,"Fixed block "+cls.t+"–"+cls.e+"."]);
   tl.push(["15:30","Focus block 2. Walk 10 min at the end of it."]);}
  tl.push([meals[0].t,"Meal 1 · "+meals[0].name.split("· ")[1]+" + 1 tsp creatine + vitamin D3. Window opens."]);
  tl.push([meals[1].t,"Meal 2 · "+meals[1].name.split("· ")[1]+(run&&dow!==6?". Eat 60–90 min before any long study block.":"")]);
  if(dow===0)tl.push(["16:00","Meal prep, ~90 min."]);
- if(run&&(dow===2||dow===4)){tl.push(["17:45","Change, 5-min walk."]);tl.push(["18:00",run]);tl.push(["18:40","Meal 3 · "+meals[2].name.split("· ")[1]]);tl.push(["18:55","Meal 4 · cottage cheese. Window closes 19:00."]);}
- else{tl.push([meals[2].t,"Meal 3 · "+meals[2].name.split("· ")[1]]);tl.push([meals[3].t,"Meal 4 · cottage cheese. Window closes 19:00."]);}
+ if(run&&(dow===2||dow===4)&&WHEN==="pm"){tl.push(["07:00","Run (fasted, easy): "+run]);tl.push([meals[2].t,"Meal 3 · "+meals[2].name.split("· ")[1]]);tl.push([meals[3].t,"Meal 4 · cottage cheese. Window closes 20:00."]);}
+ else if(run&&(dow===2||dow===4)){tl.push(["17:45","Change, 5-min walk."]);tl.push(["18:00",run]);tl.push(["18:40","Meal 3 · "+meals[2].name.split("· ")[1]]);tl.push(["18:55","Meal 4 · cottage cheese. Window closes 19:00."]);}
+ else{tl.push([meals[2].t,"Meal 3 · "+meals[2].name.split("· ")[1]]);tl.push([meals[3].t,"Meal 4 · cottage cheese. Window closes "+(WHEN==="pm"?"20:00":"19:00")+"."]);}
  if(dow===3&&dayN>1)tl.push(["19:15","Re-prep, 25 min."]);
  if(HABIT)tl.push([dow===0?"10:30":dow===6?"09:30":"10:00",`Push-ups + crunches, set 1 of 4 (${Math.ceil(HABIT/4)} each). Sets 2–4 between meals; done by 18:00.`]);
- if(dow>=1&&dow<=5)tl.push(["19:30","Wind down 19:30–20:30. Nothing hard."]);
- if(dow!==6)tl.push(["21:00","Magnesium if using. Screens down 20:30."]);
- tl.push([dow===6?"22:00":"21:30","Lights out."]);
+ if(dow>=1&&dow<=5)tl.push([WHEN==="pm"?"20:30":"19:30","Wind down for an hour. Nothing hard."]);
+ if(dow!==6)tl.push(["21:00",WHEN==="pm"?"Screens down 21:00; lights out 22:00.":"Magnesium if using. Screens down 20:30."]);
+ tl.push([dow===6||WHEN==="pm"?"22:00":"21:30","Lights out."]);
  tl.sort((a,b)=>a[0]<b[0]?-1:a[0]>b[0]?1:0);
  return{iso,d,dow,dayN,wk,phase,type,kcal,tt,train,run,tasks,meals,tl,deload,holiday,cls};
 }
@@ -854,11 +888,11 @@ function renderDay(off){
  if(P.tasks.length)h+=`<div class="block alert"><h3>Today's tasks</h3><ul>${P.tasks.map(t=>`<li>${t}</li>`).join("")}</ul></div>`;
  h+=`<div class="block"><h3>The clock</h3><ul class="timeline">${P.tl.map(([t,x])=>`<li><span class="t">${t}</span>${x}</li>`).join("")}</ul></div>`;
  const E=daily[P.iso]||{};
- if(P.train){h+=`<div class="block"><h3>06:00 · ${P.train.name}${P.deload?" (deload: 60%, 2 sets)":""}</h3><div id="liftLog">`;
+ if(P.train){h+=`<div class="block"><h3>${WHEN==="pm"?"17:30":"06:00"} · ${P.train.name}${P.deload?" (deload: 60%, 2 sets)":""}</h3><div id="liftLog">`;
   P.train.rows.forEach((r,i)=>{const last=lastLift(P.iso,P.dow,i);const v=(E.lifts&&E.lifts[i])||"";
    h+=`<div class="lrow"><span class="nm">${r[0]} <a class="watch" href="${ytLink(r[0])}" target="_blank" rel="noopener">Watch ↗</a></span><span class="sets">${r[1]}</span><span class="alt">Swaps: ${r[2].map(a=>`${a} <a class="watch" href="${ytLink(a)}" target="_blank" rel="noopener">↗</a>`).join(" · ")}</span><input type="text" id="lift${i}" placeholder="weight × reps, e.g. 180x6, 180x6, 180x5" value="${v.replace(/"/g,"&quot;")}" autocomplete="off">${last?`<span class="last">Last: ${last.v} (${fmtDate(last.iso)})</span>`:""}</div>`;});
   h+=`</div><div class="actions" style="margin-top:8px"><button type="button" class="btn" id="saveLift">Save workout</button><span class="status" id="liftStatus"></span></div><p class="small muted">Warm-up: 3 min incline walk, bar × 10, 50% × 5, 70% × 3. Rest 2–3 min on the first lift, 60–90 s after. Beat last session by a rep or 5 lb; if you can't two sessions running, drop 10%.</p></div>`;}
- if(P.run)h+=`<div class="block"><h3>${P.dow===6?"08:00":"18:00"} · Run</h3><p>${P.run}</p><div class="checks"><label>Minutes <input type="number" id="runMin" step="1" inputmode="numeric" style="width:5em" value="${E.runT||""}"></label><label>Miles <input type="number" id="runMi" step="0.01" inputmode="decimal" style="width:5em" value="${E.runD||""}"></label><label>Avg HR <input type="number" id="runHr" step="1" inputmode="numeric" style="width:5em" value="${E.runHr||""}"></label><button type="button" class="btn ghost" id="saveRun">Save run</button><span class="status" id="runStatus"></span></div>${lastRun(P.iso)?`<p class="small muted">Last run: ${lastRun(P.iso)}</p>`:""}<p class="small muted">Sentence pace. Sharp or joint pain = stop and walk. Repeat the week if it felt hard.</p></div>`;
+ if(P.run)h+=`<div class="block"><h3>${P.dow===6?"08:00":(WHEN==="pm"?"07:00":"18:00")} · Run</h3><p>${P.run}</p><div class="checks"><label>Minutes <input type="number" id="runMin" step="1" inputmode="numeric" style="width:5em" value="${E.runT||""}"></label><label>Miles <input type="number" id="runMi" step="0.01" inputmode="decimal" style="width:5em" value="${E.runD||""}"></label><label>Avg HR <input type="number" id="runHr" step="1" inputmode="numeric" style="width:5em" value="${E.runHr||""}"></label><button type="button" class="btn ghost" id="saveRun">Save run</button><span class="status" id="runStatus"></span></div>${lastRun(P.iso)?`<p class="small muted">Last run: ${lastRun(P.iso)}</p>`:""}<p class="small muted">Sentence pace. Sharp or joint pain = stop and walk. Repeat the week if it felt hard.</p></div>`;
  h+=`<div class="block"><h3>Done today</h3><div class="checks" id="doneChecks">
   <label><input type="checkbox" id="ck_m1" ${E.m1?"checked":""}> Meal 1</label><label><input type="checkbox" id="ck_m2" ${E.m2?"checked":""}> Meal 2</label><label><input type="checkbox" id="ck_m3" ${E.m3?"checked":""}> Meal 3</label><label><input type="checkbox" id="ck_m4" ${E.m4?"checked":""}> Meal 4</label>
   <label><input type="checkbox" id="ck_fast" ${E.fast?"checked":""}> Fast held (19:00–11:00)</label>
@@ -1019,16 +1053,22 @@ function renderGroceries(){
 function parseDays(str){const map={sun:0,mon:1,tue:2,wed:3,thu:4,fri:5,sat:6};return (str||"").toLowerCase().split(/[ ,/]+/).map(x=>map[x.slice(0,3)]).filter(x=>x!==undefined);}
 function parseBlock(d,t){const days=parseDays(d);const m=(t||"").match(/(\d{1,2}:\d{2})\s*[-–]\s*(\d{1,2}:\d{2})/);if(!days.length||!m)return null;const pad=x=>x.length===4?"0"+x:x;return{days,t:pad(m[1]),e:pad(m[2])};}
 function showSetup(on){$("#setup").hidden=!on;$("#tabs").hidden=on;document.querySelectorAll("section.view").forEach(v=>{if(on)v.classList.remove("on");});if(!on)route();}
-function fillSetup(){if(!PROF)return;const f=(id,v)=>{$("#"+id).value=v===undefined||v===null?"":v;};f("suStart",PROF.start);f("suDays",PROF.days);f("suSex",PROF.sex);f("suAge",PROF.age);f("suHeight",PROF.height);f("suWeight",PROF.weight);f("suBf",PROF.bf||"");f("suPace",PROF.pace);f("suEquip",PROF.equip);f("suRun",PROF.run);f("suHabit",PROF.habit);f("suHouse",PROF.house);
+function fillSetup(){if(!PROF)return;const f=(id,v)=>{$("#"+id).value=v===undefined||v===null?"":v;};const metric=PROF.units==="metric";f("suUnits",PROF.units||"us");f("suStart",PROF.start);f("suDays",PROF.days);f("suSex",PROF.sex);f("suAge",PROF.age||"");f("suHeight",PROF.height?(metric?Math.round(PROF.height*2.54):PROF.height):"");f("suWeight",metric?Math.round(PROF.weight*0.4536*10)/10:PROF.weight);f("suBf",PROF.bf||"");f("suPace",PROF.pace||"auto");f("suWhen",PROF.when||"am");f("suLiftDays",PROF.liftDays||"5");f("suEquip",PROF.equip);f("suRun",PROF.run);f("suDiet",PROF.diet||"all");f("suHabit",PROF.habit);f("suHouse",PROF.house);$("#suReset").hidden=false;
  const b=PROF.blocks||[];const dn=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];if(b[0]){f("suB1d",b[0].days.map(x=>dn[x]).join(","));f("suB1t",b[0].t+"-"+b[0].e);}if(b[1]){f("suB2d",b[1].days.map(x=>dn[x]).join(","));f("suB2t",b[1].t+"-"+b[1].e);}}
 $("#setupForm").addEventListener("submit",ev=>{ev.preventDefault();
  const v=id=>$("#"+id).value;const n=id=>{const x=parseFloat(v(id));return isNaN(x)?null:x;};
- const p={start:v("suStart"),days:parseInt(v("suDays"),10),sex:v("suSex"),age:n("suAge"),height:n("suHeight"),weight:n("suWeight"),bf:n("suBf"),pace:v("suPace"),equip:v("suEquip"),run:v("suRun"),habit:v("suHabit"),house:v("suHouse"),blocks:[parseBlock(v("suB1d"),v("suB1t")),parseBlock(v("suB2d"),v("suB2t"))].filter(Boolean)};
- if(!p.start||!p.age||!p.height||!p.weight){$("#suStatus").textContent="Start date, age, height and weight are required.";return;}
- PROF=p;try{localStorage.setItem(PK,JSON.stringify(p));}catch(e){}
- applyProfile();curOff=Math.max(0,Math.min(DUR-1,todayOff()));renderLiftTable();renderAll();showSetup(false);location.hash="#today";});
+ const metric=v("suUnits")==="metric";
+ let weight=n("suWeight"),height=n("suHeight");if(weight===null){$("#suStatus").textContent="Weight is required.";return;}
+ if(metric){weight=Math.round(weight/0.4536*10)/10;if(height)height=Math.round(height/2.54*2)/2;}
+ if(weight<80||weight>450){$("#suStatus").textContent="Check the weight value.";return;}
+ const age=n("suAge");if(age!==null&&age<18){$("#suStatus").textContent="This plan is for adults (18+).";return;}
+ const p={units:v("suUnits"),start:v("suStart")||new Date().toISOString().slice(0,10),days:parseInt(v("suDays"),10),sex:v("suSex"),age:age,height:height,weight:weight,bf:n("suBf"),pace:v("suPace"),when:v("suWhen"),liftDays:v("suLiftDays"),equip:v("suEquip"),run:v("suRun"),diet:v("suDiet"),habit:v("suHabit"),house:v("suHouse"),blocks:[parseBlock(v("suB1d"),v("suB1t")),parseBlock(v("suB2d"),v("suB2t"))].filter(Boolean)};
+ PROF=p;applyProfile();try{localStorage.setItem(PK,JSON.stringify(PROF));}catch(e){}
+ curOff=Math.max(0,Math.min(DUR-1,todayOff()));renderLiftTable();renderAll();showSetup(false);location.hash="#today";});
+$("#suReset").addEventListener("click",()=>{if(!$("#suReset").dataset.armed){$("#suReset").dataset.armed="1";$("#suReset").textContent="Tap again to erase everything";return;}try{localStorage.removeItem(PK);localStorage.removeItem(LS);localStorage.removeItem(LSD);}catch(e){}location.hash="";location.reload();});
 $("#editProfile").addEventListener("click",()=>{fillSetup();$("#suCancel").hidden=false;showSetup(true);window.scrollTo(0,0);});
 $("#suCancel").addEventListener("click",()=>showSetup(false));
+$("#suUnits").addEventListener("change",()=>{const m=$("#suUnits").value==="metric";$("#suWeight").placeholder=m?"kg, required":"lb, required";$("#suHeight").placeholder=m?"cm, optional":"inches, optional";});
 /* tabs via hash */
 const VIEWS=["today","overview","schedule","meals","lifting","running","groceries","checkin"];
 function route(){let h=(location.hash||"#today").slice(1);if(!VIEWS.includes(h))h="today";
